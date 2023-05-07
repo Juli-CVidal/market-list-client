@@ -9,25 +9,51 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const ApiClient_1 = require("./ApiClient");
 class ProductClient {
     constructor() {
         this.BASE_URL = "http://localhost:8080/api/v1/product/";
     }
     createProduct(product) {
         return __awaiter(this, void 0, void 0, function* () {
-            const options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(product),
-            };
-            const response = yield fetch(this.BASE_URL, options);
-            if (!response.ok) {
-                console.error(response.status);
+            try {
+                return yield (0, ApiClient_1.fetchJson)(this.BASE_URL, "POST", product);
             }
-            else {
-                console.log(yield response.json());
+            catch (error) {
+                console.error(error);
+            }
+        });
+    }
+    getProduct(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const method = "GET";
+            const url = `${this.BASE_URL}?id=${id}`;
+            try {
+                return yield (0, ApiClient_1.fetchJson)(url, method);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
+    }
+    updateProduct(product) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield (0, ApiClient_1.fetchJson)(this.BASE_URL, "PUT", product);
+            }
+            catch (error) {
+                console.error(error);
+            }
+        });
+    }
+    deleteProduct(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const url = `${this.BASE_URL}delete?id=${id}`;
+            try {
+                return yield (0, ApiClient_1.fetchJson)(url, "DELETE");
+            }
+            catch (error) {
+                console.error(error);
             }
         });
     }
