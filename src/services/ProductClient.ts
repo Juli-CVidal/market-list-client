@@ -1,54 +1,32 @@
-import { ApiRequest } from "../interfaces/ApiRequest";
-import { Product } from "../interfaces/Product";
-import { fetchJson } from "./ApiClient";
+import { ApiRequest } from "../types/ApiRequest";
+import { Product } from "../types/Product";
+import { DefaultApiClient } from "./DefaultApiClient";
+import { IApiClient } from "./IApiClient";
 
-class ProductClient {
-  readonly BASE_URL: string = "http://localhost:8080/api/v1/product/";
+export class ProductClient {
+  private readonly apiClient: IApiClient<Product>;
+
+  constructor(private readonly BASE_URL: string) {
+    this.apiClient = new DefaultApiClient<Product>(`${BASE_URL}/product/`);
+  }
 
   async createProduct(
     product: Product
   ): Promise<ApiRequest<Product> | undefined> {
-    try {
-      return await fetchJson(this.BASE_URL, "POST", product);
-    } catch (error) {
-      console.error(error);
-      // TODO: here I can just send an SweetAlert or something to let the user know what's happening
-    }
+    return await this.apiClient.create(product);
   }
 
   async getProduct(id: string): Promise<ApiRequest<Product> | undefined> {
-    const method: string = "GET";
-    const url: string = `${this.BASE_URL}?id=${id}`;
-    try {
-      return await fetchJson(url, method);
-    } catch (error) {
-      console.log(error);
-      // TODO: here I can just send an SweetAlert or something to let the user know what's happening
-    }
+    return await this.apiClient.get(id);
   }
 
   async updateProduct(
     product: Product
   ): Promise<ApiRequest<Product> | undefined> {
-    try {
-      return await fetchJson(this.BASE_URL, "PUT", product);
-    } catch (error) {
-      console.error(error);
-      // TODO: here I can just send an SweetAlert or something to let the user know what's happening
-    }
+    return await this.apiClient.update(product);
   }
 
-  async deleteProduct(
-    id: string
-  ): Promise<ApiRequest<Product> | undefined>  {
-    const url: string = `${this.BASE_URL}delete?id=${id}`;
-    try {
-      return await fetchJson(url,"DELETE");
-    } catch (error) {
-      console.error(error);
-      // TODO: here I can just send an SweetAlert or something to let the user know what's happening
-    }
+  async deleteProduct(id: string): Promise<ApiRequest<Product> | undefined> {
+    return await this.apiClient.delete(id);
   }
 }
-
-export default ProductClient;

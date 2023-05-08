@@ -1,8 +1,8 @@
-export async function fetchJson<T>(
+export async function fetchFromApi<T>(
   url: string,
   requestMethod: string,
   requestBody?: any
-): Promise<T> {
+): Promise<Response> {
   const headers: HeadersInit = { "Content-Type": "application/json" };
   const options: RequestInit = {
     method: requestMethod,
@@ -12,5 +12,5 @@ export async function fetchJson<T>(
     options.body = JSON.stringify(requestBody);
   }
 
-  return await fetch(url, options).then((response) => response.json());
+  return await fetch(url, options);
 }
