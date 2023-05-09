@@ -1,8 +1,8 @@
-import { ApiRequest } from "../types/ApiRequest";
-import { fetchFromApi } from "./FetchFromApi";
-import { IApiClient } from "./IApiClient";
+import { ApiRequest } from "../../types/ApiRequest";
+import { fetchFromApi } from "../../services/FetchFromApi";
+import { ICrudApiClient } from "../interfaces/ICrudApiClient";
 
-export class DefaultApiClient<T> implements IApiClient<T> {
+export class CrudApiClient<T> implements ICrudApiClient<T> {
   constructor(private readonly BASE_URL: string) {}
 
   async create(entity: T): Promise<ApiRequest<T> | undefined> {

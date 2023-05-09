@@ -1,6 +1,6 @@
-import { ApiRequest } from "../types/ApiRequest";
+import { ApiRequest } from "../../types/ApiRequest";
 
-export interface IApiClient<T> {
+export interface ICrudApiClient<T> {
   create(entity: T): Promise<ApiRequest<T> | undefined>;
 
   get(id: string): Promise<ApiRequest<T> | undefined>;

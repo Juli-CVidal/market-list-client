@@ -1,6 +1,6 @@
 import { Measure } from "./enums/Measure";
 import { Product } from "./types/Product";
-import { ProductClient } from "./services/ProductClient";
+import { ProductClient } from "./clients/ProductClient";
 
 const BASE_URL = "http://localhost:8080/api/v1";
 
